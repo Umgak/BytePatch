@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Debug_VC18" />
+    <BuildType Name="Release" />
+    <BuildType Name="Release_VC18" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="BytePatch.vcxproj" Id="ec418f74-4dd1-4428-b075-d991a3f758ba" />
+</Solution>

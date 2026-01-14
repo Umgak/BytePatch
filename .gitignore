@@ -1,0 +1,6 @@
+BytePatch/
+x64/
+.vs/
+.vscode/
+lib/
+.editorconfig

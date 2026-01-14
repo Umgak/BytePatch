@@ -1,0 +1,5 @@
+*.cpp       text  working-tree-encoding=UTF-8 eol=lf
+*.hpp       text  working-tree-encoding=UTF-8 eol=lf
+*.slnx      text  working-tree-encoding=UTF-8 eol=lf
+*.vcxproj*  text  working-tree-encoding=UTF-8 eol=lf
+*.md        text  working-tree-encoding=UTF-8 eol=lf
