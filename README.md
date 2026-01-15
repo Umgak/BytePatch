@@ -5,7 +5,7 @@ The world's shittiest runtime memory patching library.
 - Minhook-like syntax
 - Probably crash if you aren't careful
 ### Usage:
-Cone the project, include `BytePatch.h`, and link against BytePatch.lib. Then, call `BP_CreatePatch` with your address and the new bytes to write. If you're familiar with the syntaxes of Minhook and Pattern16, this will be familiar:
+Clone the project, include `BytePatch.h`, and link against BytePatch.lib. Then, call `BP_CreatePatch` with your address and the new bytes to write. If you're familiar with the syntaxes of Minhook and Pattern16, this will be familiar:
 ```cpp
 #include "include/BytePatch.hpp"
 #pragma comment(lib, "BytePatch.lib")
