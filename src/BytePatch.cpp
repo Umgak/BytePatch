@@ -15,6 +15,7 @@
 #include <windows.h>
 #endif
 #include <cstdint>				// uint8_t
+#include <utility>				// std::move, std::pair
 #include <vector>					// std::vector
 #include <unordered_map>	// std::unordered_map
 #include <cstring>				// std::memcpy (why is it in cstring that's such a big fucking header jesus christ)
@@ -99,8 +100,8 @@ static patchSignatureU8 strToPatchSignature(const std::string& patchSignatureStr
 	return patchSignatureBytes;
 }
 
-// zippers the two into a single std::vector for writing
-static std::vector<uint8_t> zipper(const std::vector<uint8_t>& originalBytes, const patchSignatureU8& patchBytes) {
+// merges the original and patched bytes into a single vector for writing, based on the calculated bitmask
+static std::vector<uint8_t> bitwiseMerge(const std::vector<uint8_t>& originalBytes, const patchSignatureU8& patchBytes) {
 	const auto& newData = patchBytes.first;
 	const auto& bitmask = patchBytes.second;
 	std::vector<uint8_t> result(originalBytes.size());
@@ -137,8 +138,8 @@ static BP_STATUS EnablePatch(PatchData* patch) {
 	BP_STATUS result = BP_OK;
 	// no need to apply any changes to memory if the patch is in QUEUE_DISABLE
 	if (patch->status != PATCH_STATUS::QUEUE_DISABLE) {
-		std::vector<uint8_t> zippedBytes = zipper(patch->originalBytes, patch->patchBytes);
-		result = ApplyPatch(patch->address, zippedBytes);
+		std::vector<uint8_t> bytes = bitwiseMerge(patch->originalBytes, patch->patchBytes);
+		result = ApplyPatch(patch->address, bytes);
 	}
 	if (result == BP_OK) {
 		patch->status = PATCH_STATUS::ENABLED;
@@ -296,12 +297,11 @@ BP_STATUS BP_ApplyQueued() {
 		BP_STATUS l_res = BP_OK;
 		if (patch.status == PATCH_STATUS::QUEUE_ENABLE) {
 			l_res = EnablePatch(&patch);
-			if (l_res != BP_OK) f_res = l_res;
 		}
 		else if (patch.status == PATCH_STATUS::QUEUE_DISABLE) {
 			l_res = DisablePatch(&patch);
-			if (l_res != BP_OK) f_res = l_res;
 		}
+		if (l_res != BP_OK) f_res = l_res;
 	}
 	return f_res;
 }
