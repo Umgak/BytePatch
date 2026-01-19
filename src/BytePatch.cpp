@@ -297,8 +297,7 @@ BP_STATUS BP_ApplyQueued() {
 		BP_STATUS l_res = BP_OK;
 		if (patch.status == PATCH_STATUS::QUEUE_ENABLE) {
 			l_res = EnablePatch(&patch);
-		}
-		else if (patch.status == PATCH_STATUS::QUEUE_DISABLE) {
+		} else if (patch.status == PATCH_STATUS::QUEUE_DISABLE) {
 			l_res = DisablePatch(&patch);
 		}
 		if (l_res != BP_OK) f_res = l_res;
